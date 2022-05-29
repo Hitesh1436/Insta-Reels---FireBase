@@ -5,7 +5,10 @@ import Firestore from './Components/Firestore';
 
 function App() {
   return (
+    <>
+    {/* <Fireauth/> */}
     <Firestore/>
+    </>
   );
 }
 

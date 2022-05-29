@@ -1,48 +1,52 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState} from 'react'
 import {auth} from '../firebase';
 
 function Fireauth() {
-    const [email,setEmail]  = useState('')
-    const [password,setpassword] = useState('')
-    const [user,setUser]  = useState('')
-let create = async()=>{
-  let res =  await auth.createUserWithEmailAndPassword(email,password);
-    console.log(res);
-}
-useEffect(()=>{
-  let unsub = auth.onAuthStateChanged((user)=>
-  setUser(user))
-  return ()=>{
-    unsub();       // cleanUp khte hn isse mtlb jo bhi event listener lge hn vo component unmount hoga toh htne chaiye
-  }
-},[])
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [user,setUser] = useState('')
 
-let logout = async()=>{
-  await auth.signOut();
-}
+    let create = async()=> {
+        // console.log(email);
+        let res = await auth.createUserWithEmailAndPassword(email,password);
+        console.log(res);
+    }
 
-let signin = async()=>{
-  await auth.signInWithEmailAndPassword(email,password);
-}
+    useEffect(()=>{
+        let unsub =auth.onAuthStateChanged((user)=>
+        setUser(user))
+        return ()=>{
+            unsub(); //cleanUp
+        }
+    },[])
 
-  return (
-      <>
-      {
-        user==null ?
-    <div>
-        <label htmlFor='email'>Email</label>
-        <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-        <label htmlFor='password'>Password</label>
-        <input type="text" value={password} onChange={(e)=>setpassword(e.target.value)}/>
-        <button onClick={create}>Sign In</button>
-    </div>:
+    let logout = async() => {
+        await auth.signOut();
+    }
+
+    let signin = async() => {
+        await auth.signInWithEmailAndPassword(email,password);
+
+    }
+
+    return (
         <>
-        <div>{user.uid}</div>
-        <button onClick={logout}>Logout</button>
+        {
+            user==null?
+        <div>
+            <label htmlFor="emial">Email</label>
+            <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+            <label htmlFor="password">Password</label>
+            <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+            <button onClick={signin}>Sign In</button>
+        </div>:
+        <>
+            <div>{user.email}</div>
+            <button onClick={logout}>Logout</button>
         </>
-     }
-    </>
-  )
+        }
+        </>
+    )
 }
 
 export default Fireauth
