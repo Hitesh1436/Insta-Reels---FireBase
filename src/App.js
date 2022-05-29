@@ -2,12 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import Fireauth from './Components/Fireauth';
 import Firestore from './Components/Firestore';
+import Firestorage from './Components/Firestorage';
 
 function App() {
   return (
     <>
-    {/* <Fireauth/> */}
-    <Firestore/>
+    <Fireauth/>
+    <Firestorage/>
     </>
   );
 }
